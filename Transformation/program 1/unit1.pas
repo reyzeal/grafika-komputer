@@ -189,6 +189,7 @@ end;
 procedure TForm1.zoomOutClick(Sender: TObject);
 var
   i : integer;
+  dis : real;
   CoordCenter : TPoint;
 begin
   case Center of
@@ -201,7 +202,12 @@ begin
        'Origin':
          CoordCenter:= TPoint.Create(0,0);
   end;
-  if ObjGambar.Coordinate[0].Distance(ObjGambar.Coordinate[1]) > 25 then
+  if ObjGambar.BeingTransform then
+     dis := ObjGambar.TransCoord[1].x - ObjGambar.TransCoord[0].x
+  else
+     dis := ObjGambar.Coordinate[1].x - ObjGambar.Coordinate[0].x;
+
+  if dis > 20 then
   begin
     for i:=0 to length(ObjGambar.Coordinate) do
     begin
