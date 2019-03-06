@@ -144,15 +144,30 @@ end;
 procedure TForm1.zoomInClick(Sender: TObject);
 var
   i : integer;
+  CoordCenter : TPoint;
 begin
-
+  case Center of
+       'Canvas':
+         CoordCenter:= ImageCenter;
+       'Object':
+         CoordCenter:= ObjGambar.area.CenterPoint;
+       'Coordinate':
+         CoordCenter:= ObjGambar.Coordinate[0];
+       'Origin':
+         CoordCenter:= TPoint.Create(0,0);
+  end;
      for i:=0 to length(ObjGambar.Coordinate) do
       begin
-         ObjGambar.Coordinate[i] := ObjGambar.Coordinate[i].Subtract(ImageCenter);
-         ObjGambar.Coordinate[i].x := round(ObjGambar.Coordinate[i].x*1.1);
-         ObjGambar.Coordinate[i].y := round(ObjGambar.Coordinate[i].y*1.1);
-         ObjGambar.Coordinate[i] := ObjGambar.Coordinate[i].Add(ImageCenter);
+         if ObjGambar.BeingTransform then
+             ObjGambar.TransCoord[i] := ObjGambar.TransCoord[i].Subtract(CoordCenter)
+         else
+             ObjGambar.TransCoord[i] := ObjGambar.Coordinate[i].Subtract(CoordCenter);
+
+         ObjGambar.TransCoord[i].x := round(ObjGambar.TransCoord[i].x*1.1);
+         ObjGambar.TransCoord[i].y := round(ObjGambar.TransCoord[i].y*1.1);
+         ObjGambar.TransCoord[i] := ObjGambar.TransCoord[i].Add(CoordCenter);
       end;
+      ObjGambar.BeingTransform:=true;
       ClearCanvas();
       DrawCanvas();
 
@@ -162,19 +177,36 @@ end;
 procedure TForm1.zoomOutClick(Sender: TObject);
 var
   i : integer;
+  CoordCenter : TPoint;
 begin
-  if ObjGambar.Coordinate[0].Distance(ObjGambar.Coordinate[1]) > 50 then
+  case Center of
+       'Canvas':
+         CoordCenter:= ImageCenter;
+       'Object':
+         CoordCenter:= ObjGambar.area.CenterPoint;
+       'Coordinate':
+         CoordCenter:= ObjGambar.Coordinate[0];
+       'Origin':
+         CoordCenter:= TPoint.Create(0,0);
+  end;
+  if ObjGambar.Coordinate[0].Distance(ObjGambar.Coordinate[1]) > 25 then
   begin
     for i:=0 to length(ObjGambar.Coordinate) do
     begin
-       ObjGambar.Coordinate[i] := ObjGambar.Coordinate[i].Subtract(ImageCenter);
-       ObjGambar.Coordinate[i].x := round(ObjGambar.Coordinate[i].x*0.9);
-       ObjGambar.Coordinate[i].y := round(ObjGambar.Coordinate[i].y*0.9);
-       ObjGambar.Coordinate[i] := ObjGambar.Coordinate[i].Add(ImageCenter);
+       if ObjGambar.BeingTransform   then
+             ObjGambar.TransCoord[i] := ObjGambar.TransCoord[i].Subtract(CoordCenter)
+         else
+             ObjGambar.TransCoord[i] := ObjGambar.Coordinate[i].Subtract(CoordCenter);
+       ObjGambar.TransCoord[i].x := round(ObjGambar.TransCoord[i].x*0.9);
+       ObjGambar.TransCoord[i].y := round(ObjGambar.TransCoord[i].y*0.9);
+       ObjGambar.TransCoord[i] := ObjGambar.TransCoord[i].Add(CoordCenter);
     end;
+    ObjGambar.BeingTransform:=true;
     ClearCanvas();
     DrawCanvas();
+
   end;
+
 
 
 end;
@@ -184,6 +216,7 @@ begin
   ClearCanvas;
   ImageCenter := TPoint.Create(round(Image1.Width/2),round(Image1.Height/2));
   Label1.Caption:=FloatToStr(CurrentDegree);
+  Center:= 'Canvas';
 end;
 
 procedure TForm1.CounterClockwiseClick(Sender: TObject);
@@ -192,7 +225,7 @@ var
   i : integer;
   CoordCenter : TPoint;
 begin
-  CurrentDegree:=round(CurrentDegree+StrToFloat(degree.Text)) mod 360;
+  CurrentDegree:=round(CurrentDegree-StrToFloat(degree.Text)) mod 360;
   numDeg:= CurrentDegree * pi / 180;
 
   C := cos(numDeg);
@@ -213,8 +246,8 @@ begin
          dx := ObjGambar.Coordinate[i].x - CoordCenter.x;
          dy := ObjGambar.Coordinate[i].y - CoordCenter.y;
          ObjGambar.TransCoord[i] := TPoint.Create(0,0);
-         ObjGambar.TransCoord[i].x := round(dx*C+dy*S) + CoordCenter.x;
-         ObjGambar.TransCoord[i].y := round(-dx*S+dy*C) + CoordCenter.y;
+         ObjGambar.TransCoord[i].x := round(dx*C-dy*S) + CoordCenter.x;
+         ObjGambar.TransCoord[i].y := round(dx*S+dy*C) + CoordCenter.y;
       end;
       ClearCanvas();
       DrawCanvas();
@@ -275,10 +308,10 @@ begin
   ObjGambar.BeingTransform:=false;
   SetLength(ObjGambar.Coordinate,4);
   SetLength(ObjGambar.TransCoord,4);
-  ObjGambar.Coordinate[0]:=TPoint.Create(ImageCenter.x-25,ImageCenter.y-25);
-  ObjGambar.Coordinate[1]:=TPoint.Create(ImageCenter.x+25,ImageCenter.y-25);
-  ObjGambar.Coordinate[2]:=TPoint.Create(ImageCenter.x+25,ImageCenter.y+25);
-  ObjGambar.Coordinate[3]:=TPoint.Create(ImageCenter.x-25,ImageCenter.y+25);
+  ObjGambar.Coordinate[0]:=TPoint.Create(ImageCenter.x-45,ImageCenter.y-25);
+  ObjGambar.Coordinate[1]:=TPoint.Create(ImageCenter.x+5,ImageCenter.y-25);
+  ObjGambar.Coordinate[2]:=TPoint.Create(ImageCenter.x+5,ImageCenter.y+25);
+  ObjGambar.Coordinate[3]:=TPoint.Create(ImageCenter.x-45,ImageCenter.y+25);
   ObjGambar.area := TRect.Create(ObjGambar.Coordinate[0],ObjGambar.Coordinate[2]);
   ClearCanvas();
   DrawCanvas();
