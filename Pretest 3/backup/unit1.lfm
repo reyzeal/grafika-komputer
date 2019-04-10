@@ -1,0 +1,198 @@
+object Form1: TForm1
+  Left = 197
+  Height = 506
+  Top = 190
+  Width = 818
+  Caption = 'Form1'
+  ClientHeight = 506
+  ClientWidth = 818
+  OnActivate = FormActivate
+  LCLVersion = '1.8.4.0'
+  object Image1: TImage
+    Left = 54
+    Height = 342
+    Top = 26
+    Width = 518
+    OnMouseMove = Image1MouseMove
+    OnMouseUp = Image1MouseUp
+  end
+  object Persegi: TButton
+    Left = 643
+    Height = 25
+    Top = 56
+    Width = 75
+    Caption = 'Persegi'
+    OnClick = PersegiClick
+    TabOrder = 0
+  end
+  object Segitiga: TButton
+    Left = 643
+    Height = 25
+    Top = 96
+    Width = 75
+    Caption = 'Segitiga'
+    OnClick = SegitigaClick
+    TabOrder = 1
+  end
+  object Jajargenjang: TButton
+    Left = 643
+    Height = 25
+    Top = 144
+    Width = 75
+    Caption = 'Jajargenjang'
+    OnClick = JajargenjangClick
+    TabOrder = 2
+  end
+  object Button4: TButton
+    Left = 643
+    Height = 25
+    Top = 232
+    Width = 75
+    Caption = '^'
+    OnClick = Button4Click
+    TabOrder = 3
+  end
+  object Button5: TButton
+    Left = 600
+    Height = 25
+    Top = 264
+    Width = 75
+    Caption = '<'
+    OnClick = Button5Click
+    TabOrder = 4
+  end
+  object Button6: TButton
+    Left = 688
+    Height = 25
+    Top = 264
+    Width = 75
+    Caption = '>'
+    OnClick = Button6Click
+    TabOrder = 5
+  end
+  object Button7: TButton
+    Left = 643
+    Height = 25
+    Top = 296
+    Width = 75
+    Caption = 'v'
+    OnClick = Button7Click
+    TabOrder = 6
+  end
+  object Label1: TLabel
+    Left = 57
+    Height = 15
+    Top = 376
+    Width = 34
+    Caption = 'Label1'
+    ParentColor = False
+  end
+  object Button1: TButton
+    Left = 720
+    Height = 25
+    Top = 232
+    Width = 43
+    Caption = '↗'
+    OnClick = Button1Click
+    TabOrder = 7
+  end
+  object Button2: TButton
+    Left = 720
+    Height = 25
+    Top = 296
+    Width = 43
+    Caption = '↘'
+    OnClick = Button2Click
+    TabOrder = 8
+  end
+  object Button3: TButton
+    Left = 600
+    Height = 25
+    Top = 232
+    Width = 40
+    Caption = '↖'
+    OnClick = Button3Click
+    TabOrder = 9
+  end
+  object Button8: TButton
+    Left = 600
+    Height = 25
+    Top = 296
+    Width = 40
+    Caption = '↙'
+    OnClick = Button8Click
+    TabOrder = 10
+  end
+  object Lingkaran: TButton
+    Left = 643
+    Height = 25
+    Top = 184
+    Width = 75
+    Caption = 'Lingkaran'
+    OnClick = LingkaranClick
+    TabOrder = 11
+  end
+  object Button9: TButton
+    Left = 592
+    Height = 25
+    Top = 352
+    Width = 75
+    Caption = '+'
+    OnClick = Button9Click
+    TabOrder = 12
+  end
+  object Button10: TButton
+    Left = 712
+    Height = 25
+    Top = 352
+    Width = 75
+    Caption = '-'
+    OnClick = Button10Click
+    TabOrder = 13
+  end
+  object Kubus: TButton
+    Left = 192
+    Height = 25
+    Top = 376
+    Width = 75
+    Caption = 'Kubus'
+    OnClick = KubusClick
+    TabOrder = 14
+  end
+  object Balok: TButton
+    Left = 272
+    Height = 25
+    Top = 376
+    Width = 75
+    Caption = 'Balok'
+    OnClick = BalokClick
+    TabOrder = 15
+  end
+  object Limas: TButton
+    Left = 352
+    Height = 25
+    Top = 376
+    Width = 75
+    Caption = 'Limas'
+    OnClick = LimasClick
+    TabOrder = 16
+  end
+  object ColorButton1: TColorButton
+    Left = 497
+    Height = 25
+    Top = 376
+    Width = 75
+    BorderWidth = 2
+    ButtonColorSize = 16
+    ButtonColor = clBlack
+  end
+  object ColorButton2: TColorButton
+    Left = 643
+    Height = 25
+    Top = 26
+    Width = 75
+    BorderWidth = 2
+    ButtonColorSize = 16
+    ButtonColor = clWhite
+  end
+end
