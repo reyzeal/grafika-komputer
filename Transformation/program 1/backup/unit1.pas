@@ -76,7 +76,8 @@ end;
 
 procedure TForm1.DrawCanvas();
 var
-  area : TRect;
+  tengah : TPoint;
+  distance : integer;
 begin
 
 
@@ -93,12 +94,16 @@ begin
 
            if ObjGambar.BeingTransform then
            begin
-               Image1.Canvas.EllipseC(ObjGambar.TransCoord[0].x,ObjGambar.TransCoord[0].y,25,25);
+             distance := round(ObjGambar.TransCoord[0].Distance(ObjGambar.TransCoord[1])) div 2;
+             tengah := TRect.Create(ObjGambar.TransCoord[0],ObjGambar.TransCoord[1]).CenterPoint;
+             Image1.Canvas.EllipseC(ObjGambar.TransCoord[0].x,ObjGambar.TransCoord[0].y,distance,distance);
            end
 
            else
            begin
-             Image1.Canvas.EllipseC(ObjGambar.Coordinate[0].x,ObjGambar.Coordinate[0].y,25,25);
+             distance := round(ObjGambar.Coordinate[0].Distance(ObjGambar.Coordinate[1])) div 2;
+             tengah := TRect.Create(ObjGambar.Coordinate[0],ObjGambar.Coordinate[1]).CenterPoint;
+             Image1.Canvas.EllipseC(tengah.x,tengah.y,distance,distance);
            end;
          end;
 
@@ -109,21 +114,33 @@ end;
 procedure TForm1.RadioButton1Change(Sender: TObject);
 begin
   Center := 'Canvas';
+  CurrentDegree:=0;
+  ClearCanvas();
+  DrawCanvas();
 end;
 
 procedure TForm1.RadioButton2Change(Sender: TObject);
 begin
   Center := 'Object';
+  CurrentDegree:=0;
+  ClearCanvas();
+  DrawCanvas();
 end;
 
 procedure TForm1.RadioButton3Change(Sender: TObject);
 begin
   Center := 'Coordinate';
+  CurrentDegree:=0;
+  ClearCanvas();
+  DrawCanvas();
 end;
 
 procedure TForm1.RadioButton4Change(Sender: TObject);
 begin
   Center:= 'Origin';
+  CurrentDegree:=0;
+  ClearCanvas();
+  DrawCanvas();
 end;
 
 procedure TForm1.segitigaClick(Sender: TObject);
@@ -177,6 +194,7 @@ end;
 procedure TForm1.zoomOutClick(Sender: TObject);
 var
   i : integer;
+  dis : real;
   CoordCenter : TPoint;
 begin
   case Center of
@@ -189,7 +207,12 @@ begin
        'Origin':
          CoordCenter:= TPoint.Create(0,0);
   end;
-  if ObjGambar.Coordinate[0].Distance(ObjGambar.Coordinate[1]) > 25 then
+  if ObjGambar.BeingTransform then
+     dis := ObjGambar.TransCoord[1].x - ObjGambar.TransCoord[0].x
+  else
+     dis := ObjGambar.Coordinate[1].x - ObjGambar.Coordinate[0].x;
+
+  if dis > 20 then
   begin
     for i:=0 to length(ObjGambar.Coordinate) do
     begin
@@ -293,9 +316,10 @@ begin
   CurrentDegree:=0;
   ObjGambar.name := 'lingkaran';
   ObjGambar.BeingTransform:=false;
-  SetLength(ObjGambar.Coordinate,1);
-  SetLength(ObjGambar.TransCoord,1);
-  ObjGambar.Coordinate[0]:=TPoint.Create(ImageCenter.x,ImageCenter.y);
+  SetLength(ObjGambar.Coordinate,2);
+  SetLength(ObjGambar.TransCoord,2);
+  ObjGambar.Coordinate[0]:=TPoint.Create(ImageCenter.x-25,ImageCenter.y-25);
+  ObjGambar.Coordinate[1]:=TPoint.Create(ImageCenter.x+25,ImageCenter.y+25);
   ObjGambar.area := TRect.Create(ImageCenter.Subtract(TPoint.Create(25,25)),50,50);
   ClearCanvas();
   DrawCanvas();
