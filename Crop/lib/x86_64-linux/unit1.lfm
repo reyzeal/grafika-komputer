@@ -1,0 +1,38 @@
+object Form1: TForm1
+  Left = 267
+  Height = 446
+  Top = 159
+  Width = 738
+  Caption = 'Form1'
+  ClientHeight = 446
+  ClientWidth = 738
+  OnActivate = FormActivate
+  LCLVersion = '1.8.2.0'
+  object Image1: TImage
+    Left = 15
+    Height = 333
+    Top = 17
+    Width = 562
+    OnMouseDown = Image1MouseDown
+    OnMouseMove = Image1MouseMove
+    OnMouseUp = Image1MouseUp
+  end
+  object Button1: TButton
+    Left = 605
+    Height = 25
+    Top = 28
+    Width = 75
+    Caption = 'Pen'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 605
+    Height = 25
+    Top = 64
+    Width = 75
+    Caption = 'Crop'
+    OnClick = Button2Click
+    TabOrder = 1
+  end
+end
